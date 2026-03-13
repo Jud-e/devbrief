@@ -1,0 +1,219 @@
+.feed-page {
+  min-height: 100vh;
+}
+
+.feed-header {
+  background: linear-gradient(180deg, rgba(110,231,183,0.04) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 24px 40px;
+}
+
+.feed-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.feed-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.feed-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.feed-sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 420px;
+  line-height: 1.65;
+}
+
+.feed-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  padding: 20px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.stat { text-align: center; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: 4px;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+}
+
+.feed-controls {
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 60px;
+  z-index: 90;
+  background: rgba(10, 10, 15, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.feed-controls-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 14px 18px;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all var(--transition);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.cat-tab:hover {
+  color: var(--text-secondary);
+}
+
+.cat-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.feed-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.card-skeleton {
+  height: 340px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  animation: pulse 1.5s ease infinite;
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.btn-load-more {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 12px 32px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.03em;
+}
+
+.btn-load-more:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.error-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-muted);
+}
+
+.error-state span {
+  font-size: 40px;
+  color: var(--yellow);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.error-state p {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.error-hint {
+  font-family: var(--font-mono);
+  font-size: 12px !important;
+  color: var(--text-muted) !important;
+  margin-top: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-state span {
+  font-size: 48px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 15px;
+}
