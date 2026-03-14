@@ -6,9 +6,57 @@ import { Feed } from './pages/Feed';
 import { Bookmarks } from './pages/Bookmarks';
 import { Login } from './pages/Login';
 import { Search } from './pages/Search';
+import { useState, useEffect } from 'react';
+import './App.css';
+
+function WakingUp() {
+  return (
+    <div className="wakeup-screen">
+      <div className="wakeup-spinner" />
+      <h2 className="wakeup-title">Waking up the server...</h2>
+      <p className="wakeup-sub">
+        The demo server spins down when idle.<br />
+        It'll be ready in about 30 seconds — hang tight.
+      </p>
+      <span className="wakeup-badge">⬡ DevBrief is starting</span>
+    </div>
+  );
+}
 
 function AppInner() {
   const { bookmarks } = useBookmarks();
+  const [serverReady, setServerReady] = useState(true);
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setServerReady(false), 3000);
+
+    fetch('/api/health')
+      .then(res => {
+        if (res.ok) {
+          clearTimeout(timeout);
+          setServerReady(true);
+          setChecking(false);
+        }
+      })
+      .catch(() => {
+        setServerReady(false);
+        setChecking(false);
+        // Keep retrying every 5s until server is up
+        const interval = setInterval(() => {
+          fetch('/api/health').then(res => {
+            if (res.ok) {
+              clearInterval(interval);
+              setServerReady(true);
+            }
+          }).catch(() => {});
+        }, 5000);
+      });
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (!serverReady && !checking) return <WakingUp />;
 
   return (
     <>

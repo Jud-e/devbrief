@@ -1,0 +1,45 @@
+.wakeup-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  background: #fff;
+  gap: 16px;
+}
+
+.wakeup-spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #e0eae0;
+  border-top-color: #1a7a1a;
+  animation: spin 1s linear infinite;
+  margin-bottom: 8px;
+}
+
+.wakeup-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.wakeup-sub {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.wakeup-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: #f0f8f0;
+  border: 1px solid #c8ddc8;
+  color: #1a7a1a;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
