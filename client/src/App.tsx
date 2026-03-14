@@ -29,9 +29,13 @@ function AppInner() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
+    const healthUrl = import.meta.env.VITE_API_URL
+      ? `${import.meta.env.VITE_API_URL}/api/health`
+      : '/api/health';
+
     const timeout = setTimeout(() => setServerReady(false), 3000);
 
-    fetch('/api/health')
+    fetch(healthUrl)
       .then(res => {
         if (res.ok) {
           clearTimeout(timeout);
@@ -42,9 +46,8 @@ function AppInner() {
       .catch(() => {
         setServerReady(false);
         setChecking(false);
-        // Keep retrying every 5s until server is up
         const interval = setInterval(() => {
-          fetch('/api/health').then(res => {
+          fetch(healthUrl).then(res => {
             if (res.ok) {
               clearInterval(interval);
               setServerReady(true);
