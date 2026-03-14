@@ -5,7 +5,6 @@ export const newsRouter = express.Router();
 
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
 const GNEWS_BASE = 'https://gnews.io/api/v4';
-console.log('KEY:', process.env.NEWS_API_KEY)
 const cache = new Map();
 const CACHE_TTL = 10 * 60 * 1000;
 
