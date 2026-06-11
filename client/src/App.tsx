@@ -7,6 +7,7 @@ import { Bookmarks } from './pages/Bookmarks';
 import { Login } from './pages/Login';
 import { Search } from './pages/Search';
 import { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 function WakingUp() {
@@ -80,6 +81,7 @@ export default function App() {
       <AuthProvider>
         <AppInner />
       </AuthProvider>
+      <Analytics />
     </BrowserRouter>
   );
 }
