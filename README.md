@@ -2,131 +2,172 @@
 
 ![DevBrief preview](./screenshot.png)
 
-<div align="center">
 
-![Deploy](https://img.shields.io/badge/frontend-vercel-black?style=flat-square&logo=vercel)
-![Deploy](https://img.shields.io/badge/backend-render-46E3B7?style=flat-square&logo=render)
-![React](https://img.shields.io/badge/react-18-61DAFB?style=flat-square&logo=react)
-![TypeScript](https://img.shields.io/badge/typescript-5-3178C6?style=flat-square&logo=typescript)
-![Node](https://img.shields.io/badge/node-18+-339933?style=flat-square&logo=node.js)
-![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-**[Live Demo](https://devbrief-sigma.vercel.app)** · [Report a Bug](https://github.com/YOUR_USERNAME/devbrief/issues) · [Request a Feature](https://github.com/YOUR_USERNAME/devbrief/issues)
 
-</div>
+[Live Demo](https://devbrief-sigma.vercel.app/) · [Report a Bug](https://github.com/Jud-e/devbrief/issues) · [Request a Feature](https://github.com/Jud-e/devbrief/issues)
 
 ---
 
 ## What is DevBrief?
 
-DevBrief is an AI-powered tech news digest built for developers. It pulls live articles from across the web, runs them through the Claude API to generate concise summaries, topic tags, and sentiment scores, and presents them in a clean editorial layout — so you can stay informed without the scroll.
+DevBrief is a full-stack web application that aggregates technology news and uses the **Claude API** to enrich articles with concise summaries, topic tags, reading difficulty, and sentiment.
+
+The application combines a **React + TypeScript frontend** with a **Node.js + Express backend**, external news and AI APIs, authentication, caching, and deployment across Vercel and Render.
+
+The goal was to make keeping up with technology news faster and easier without having to manually browse multiple sources.
 
 ## Features
 
-- **Live news feed** — Real-time tech articles via GNews API, filterable by category (AI, Web Dev, Cloud, Security, Open Source, Startups)
-- **AI enrichment** — Each article is summarized by Claude with topic tags, reading difficulty, and sentiment
-- **Editorial layout** — Hero article, sidebar feed, and bottom article strip
-- **Article search** — Full-text search across tech news
-- **Bookmarks** — Save articles to a personal reading list
-- **JWT auth** — Login and register with JSON Web Tokens
-- **Cold-start handling** — Friendly loading screen while the backend wakes up
+* 📰 **Live technology news** — Articles fetched from the GNews API and organized by category
+* 🤖 **AI enrichment** — Claude generates summaries, topic tags, reading difficulty, and sentiment
+* ⚡ **Concurrent processing** — Multiple articles are enriched concurrently using `Promise.all`
+* 💾 **TTL caching** — In-memory caching reduces repeated external API requests with a 10-minute expiration
+* 🔐 **JWT authentication** — Login and registration flows using JSON Web Tokens
+* 🛡️ **API rate limiting** — Express rate limiting helps control excessive requests
+* 🔎 **Article search** — Search across technology news
+* 🔖 **Bookmarks** — Save articles to a personal reading list
+* 🖥️ **Cold-start handling** — Frontend feedback while the deployed backend wakes up
+* 📱 **Responsive editorial UI** — Article-focused layout for browsing technology news
+
+## Technical Highlights
+
+### AI API orchestration
+
+The backend sends selected articles to the Claude API for enrichment and processes multiple requests concurrently.
+
+The application expects structured JSON from the model and falls back to existing article information when AI processing fails, allowing the news feed to remain usable even when enrichment is unavailable.
+
+### Caching
+
+DevBrief uses an in-memory `Map` with a **10-minute TTL** to cache category feed results.
+
+This reduces unnecessary calls to external news and AI services when users request the same feed repeatedly.
+
+### Backend architecture
+
+The Express backend separates responsibilities across:
+
+* Routes
+* Authentication middleware
+* Rate-limiting middleware
+* AI services
+* News services
+
+The frontend communicates with the backend through a typed API utility.
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, TypeScript, Vite, React Router v6 |
-| Backend | Node.js, Express, ES Modules |
-| AI | Anthropic Claude API |
-| News | GNews API |
-| Auth | JSON Web Tokens (JWT) |
-| Deployment | Vercel (frontend) + Render (backend) |
+| Layer          | Technology                               |
+| -------------- | ---------------------------------------- |
+| Frontend       | React 18, TypeScript, Vite, React Router |
+| Backend        | Node.js, Express, ES Modules             |
+| AI             | Anthropic Claude API                     |
+| News           | GNews API                                |
+| Authentication | JSON Web Tokens                          |
+| Deployment     | Vercel + Render                          |
+| Development    | Git, npm                                 |
 
 ## Project Structure
 
-```
+```text
 devbrief/
-├── client/                  # React + TypeScript frontend
+├── client/
 │   └── src/
 │       ├── components/      # Navbar, ArticleCard
-│       ├── pages/           # Feed, Bookmarks, Login, Search
-│       ├── hooks/           # useAuth, useBookmarks, useNews
-│       └── utils/           # API client
+│       ├── pages/            # Feed, Bookmarks, Login, Search
+│       ├── hooks/            # useAuth, useBookmarks, useNews
+│       └── utils/            # API client
 │
-└── server/                  # Express backend
+└── server/
     └── src/
-        ├── routes/          # auth.js, news.js
-        ├── services/        # ai.js (Claude integration)
-        └── middleware/      # auth.js, rateLimiter.js
+        ├── routes/           # auth.js, news.js
+        ├── services/         # ai.js
+        └── middleware/       # auth.js, rateLimiter.js
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- [GNews API key](https://gnews.io) — free tier, no credit card
-- [Anthropic API key](https://console.anthropic.com) — pay per use
+* Node.js 18+
+* [GNews API key](https://gnews.io/)
+* [Anthropic API key](https://console.anthropic.com/)
 
 ### Installation
 
 ```bash
-# Clone the repo
-git clone https://github.com/YOUR_USERNAME/devbrief.git
+git clone https://github.com/Jud-e/devbrief.git
 cd devbrief
 
-# Install all dependencies
 npm run install:all
-
-# Configure environment
-cd server && cp .env.example .env
-# → Add your API keys to server/.env
 ```
+
+Configure the backend environment:
+
+```bash
+cd server
+cp .env.example .env
+```
+
+Add the required API keys to `server/.env`.
 
 ### Running locally
 
-```bash
-# Terminal 1 — backend
-cd server && npm run dev
+Start the backend:
 
-# Terminal 2 — frontend
-cd client && npm run dev
+```bash
+cd server
+npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+Start the frontend in a second terminal:
 
-**Demo credentials:** `demo@devbrief.app` / `demo1234`
+```bash
+cd client
+npm run dev
+```
+
+Open `http://localhost:5173`.
 
 ## Deployment
 
-| Service | Purpose | Free tier |
-|---------|---------|-----------|
-| [Vercel](https://vercel.com) | Frontend hosting | ✅ Unlimited |
-| [Render](https://render.com) | Backend hosting | ✅ 750hrs/month |
+| Service | Purpose          |
+| ------- | ---------------- |
+| Vercel  | Frontend hosting |
+| Render  | Backend hosting  |
 
-See [SETUP.md](./SETUP.md) for full deployment instructions.
+The application is deployed as separate frontend and backend services.
 
-## Environment Variables
+See [`SETUP.md`](./SETUP.md) for deployment configuration.
 
-**`server/.env`**
-```env
-PORT=3001
-CLIENT_URL=https://your-app.vercel.app
-JWT_SECRET=your-secret
-ANTHROPIC_API_KEY=sk-ant-...
-NEWS_API_KEY=your-gnews-key
-```
+## Known Limitations & Future Improvements
+
+DevBrief is a portfolio project and has several areas that could be improved:
+
+* Replace prototype authentication with database-backed user accounts and secure password handling
+* Add automated unit and integration tests
+* Implement proper server-side pagination
+* Improve cache-key handling for different pagination parameters
+* Replace the in-memory cache with shared caching if the backend is horizontally scaled
+* Move beyond the current prototype authentication model with stronger authorization around protected API resources
 
 ## Contributing
 
-Contributions are welcome. Please open an issue first to discuss what you'd like to change.
+Contributions are welcome.
 
-1. Fork the repo
-2. Create a branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m 'add your feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push the branch
 5. Open a Pull Request
 
 ## License
+
+MIT — see [`LICENSE`](./LICENSE).
+
+---
+
+**Built with React, TypeScript, Express, and Claude API.**
 
 MIT — see [LICENSE](./LICENSE) for details.
