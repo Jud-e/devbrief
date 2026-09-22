@@ -2,11 +2,11 @@
   "name": "devbrief-server",
   "version": "1.0.0",
   "type": "module",
-
   "scripts": {
-  "dev": "nodemon --env-file=.env --experimental-specifier-resolution=node src/index.js",
-  "start": "node --env-file=.env src/index.js"
-},
+    "dev": "nodemon --env-file=.env --experimental-specifier-resolution=node src/index.js",
+    "start": "node --env-file=.env src/index.js",
+    "test": "vitest"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
     "cors": "^2.8.5",
@@ -17,6 +17,7 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.3"
+    "nodemon": "^3.1.3",
+    "vitest": "^5.0.1"
   }
 }
