@@ -6,10 +6,13 @@
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "install:all": "cd server && npm install && cd ../client && npm install",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install && npm run build",
     "start": "concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "devDependencies": {
-    "concurrently": "^10.0.5","typescript": "^7.0.2"
+    "concurrently": "^10.0.5"
+  },
+  "dependencies": {
+    "typescript": "^7.0.2"
   }
 }
