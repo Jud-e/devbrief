@@ -76,3 +76,27 @@ it('returns the parsed Claude response when the API succeeds', async () => {
     sentiment: 'positive',
   });
 });
+
+it('returns a fallback when Claude returns invalid JSON', async () => {
+  mockCreate.mockResolvedValue({
+    content: [
+      {
+        text: 'This is not valid JSON',
+      },
+    ],
+  });
+
+  const article = {
+    title: 'Test article',
+    description: 'This is a test description.',
+  };
+
+  const result = await summarizeArticle(article);
+
+  expect(result).toEqual({
+    summary: 'This is a test description.',
+    tags: ['Tech'],
+    difficulty: 'intermediate',
+    sentiment: 'neutral',
+  });
+});
