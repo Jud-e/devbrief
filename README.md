@@ -86,6 +86,23 @@ devbrief/
         └── middleware/       # auth.js, rateLimiter.js
 ```
 
+## Testing
+
+The backend includes automated tests using **Vitest** and **Supertest**.
+
+Current coverage includes:
+
+- Claude API success and failure handling
+- Fallback behavior for malformed AI responses
+- News feed API responses
+- In-memory cache behavior
+
+External APIs are mocked during testing, allowing the suite to run without
+requiring production API credentials.
+
+Tests run automatically through **GitHub Actions** on pushes and pull
+requests to `main`.
+
 ## Getting Started
 
 ### Prerequisites
