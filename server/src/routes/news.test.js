@@ -71,14 +71,14 @@ it('returns cached results on a second request', async () => {
     const firstResponse = await request(app)
         .get('/api/news/feed')
         .query({
-            category: 'technology',
+            category: 'cybersecurity',
             pageSize: 10,
         });
 
     const secondResponse = await request(app)
         .get('/api/news/feed')
         .query({
-            category: 'technology',
+            category: 'cybersecurity',
             pageSize: 10,
         });
 
