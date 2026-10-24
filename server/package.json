@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon --env-file=.env --experimental-specifier-resolution=node src/index.js",
     "start": "node --env-file=.env src/index.js",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
