@@ -1,0 +1,16 @@
+name: ingest
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ingestion
+        run: |
+          curl -fsS -X POST "$URL/api/cron/ingest" \
+            -H "Authorization: Bearer $CRON_SECRET"
+        env:
+          URL: ${{ secrets.DEVBRIEF_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}

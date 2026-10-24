@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EnrichmentStatus {
+  PENDING
+  DONE
+  FAILED
+}
+
+model Source {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  type          String // "api" | "rss"
+  url           String
+  lastFetchedAt DateTime?
+  articles      Article[]
+}
+
+model Article {
+  id            String           @id @default(cuid())
+  sourceId      String
+  source        Source           @relation(fields: [sourceId], references: [id])
+  externalId    String
+  canonicalUrl  String           @unique
+  title         String
+  snippet       String? // short excerpt from the feed's own description, max 500 chars
+  publishedAt   DateTime
+  fetchedAt     DateTime         @default(now())
+  summary       String?
+  whyItMatters  String?
+  status        EnrichmentStatus @default(PENDING)
+  attempts      Int              @default(0)
+  lastError     String?
+  model         String?
+  promptVersion Int?
+  tags          ArticleTag[]
+
+  @@unique([sourceId, externalId])
+  @@index([status])
+  @@index([publishedAt])
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  name     String       @unique
+  articles ArticleTag[]
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@index([tagId, articleId])
+}
