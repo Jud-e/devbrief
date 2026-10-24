@@ -42,7 +42,7 @@ async function fetchFromGNews(url) {
 
 newsRouter.get('/feed', async (req, res) => {
   const { category = 'technology', pageSize = 10 } = req.query;
-  const cacheKey = `feed:${category}`;
+  const cacheKey = `feed:${category}:${pageSize}`;
 
   if (cache.has(cacheKey)) {
     const { data, timestamp } = cache.get(cacheKey);
@@ -97,3 +97,4 @@ newsRouter.get('/search', async (req, res) => {
     res.status(500).json({ error: 'Search failed', detail: err.message });
   }
 });
+
